@@ -1,6 +1,6 @@
 # kotlin-quarkus-mp-rest-service project
 
-## How this aoo was generated
+## How this app was generated
 
 ```
 docker run --rm --name mvn -it -v $(pwd):/proj -w /proj maven:3-jdk-11 /bin/bash -c "\
@@ -19,7 +19,6 @@ This fails in the final Gradle build, which generates the Gradle wrapper. Hence:
 
 ```
 cd kotlin-quarkus-mp-rest-service
-
 docker run --rm --name gradle -it -v $(pwd):/proj -w /proj gradle:jdk11 gradle wrapper
 ```
 

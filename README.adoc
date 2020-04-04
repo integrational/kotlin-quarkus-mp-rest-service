@@ -6,6 +6,17 @@
 * Gradle build using Kotlin DSL
 * targeting Java 11
 
+== Platform
+
+The platform comprises all libraries/modules/packages that are by definition always present and are pre-approved to appear in all layers of the system, including `domain`.
+
+* Jave SE 11 (https://docs.oracle.com/en/java/javase/11/docs/api/java.se/module-summary.html), but trying to use only
+** `java.base` (https://docs.oracle.com/en/java/javase/11/docs/api/java.base/module-summary.html)
+** `java.logging` (https://docs.oracle.com/en/java/javase/11/docs/api/java.logging/module-summary.html)
+* Kotlin standard library for Common and JVM targets (https://kotlinlang.org/api/latest/jvm/stdlib/)
+* JSR-330 `javax.inject`
+* CDI `javax.enterprise.context`
+
 == How this app was generated
 
 [source,bash]
@@ -29,13 +40,3 @@ This fails in the final Gradle build, which generates the Gradle wrapper. Hence:
 cd kotlin-quarkus-mp-rest-service
 docker run --rm --name gradle -it -v $(pwd):/proj -w /proj gradle:jdk11 gradle wrapper
 ----
-
-== Platform
-
-The platform comprises all libraries/modules/packages that are by definition always present and are pre-approved to appear in all layers of the system, including `domain`.
-
-* Jave SE 11 (https://docs.oracle.com/en/java/javase/11/docs/api/java.se/module-summary.html), but trying to use only
-** `java.base` (https://docs.oracle.com/en/java/javase/11/docs/api/java.base/module-summary.html)
-** `java.logging` (https://docs.oracle.com/en/java/javase/11/docs/api/java.logging/module-summary.html)
-* Kotlin standard library for Common and JVM targets (https://kotlinlang.org/api/latest/jvm/stdlib/)
-* JSR-330 `javax.inject`

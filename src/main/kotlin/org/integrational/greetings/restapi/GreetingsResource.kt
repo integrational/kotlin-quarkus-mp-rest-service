@@ -1,14 +1,16 @@
 package org.integrational.greetings.restapi
 
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.ws.rs.core.MediaType
+import org.integrational.greetings.domain.service.GreetingsService
+import javax.enterprise.context.ApplicationScoped
+import javax.inject.Inject
 
-@Path("/greetings")
-class GreetingsResource {
+@ApplicationScoped
+class GreetingsResource(@Inject private val svc: GreetingsService) : GreetingsAPI {
+    override fun add(toAdd: GreetingToAdd) = svc.add(toAdd.name)
+    override fun getByName(name: String) = svc.get(name)
+    override fun getAll() = svc.getAll()
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "hello"
+//    @ExceptionHandler
+//    fun handleDuplicateName(ex: DuplicateNameException): ResponseEntity<ErrorResponse> =
+//        ResponseEntity.badRequest().body(ErrorResponse("Duplicate name '${ex.name}'"))
 }

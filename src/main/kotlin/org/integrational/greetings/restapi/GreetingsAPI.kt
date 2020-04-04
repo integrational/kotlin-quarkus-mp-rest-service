@@ -1,6 +1,7 @@
 package org.integrational.greetings.restapi
 
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition
+import org.eclipse.microprofile.openapi.annotations.Operation
 import org.eclipse.microprofile.openapi.annotations.info.Contact
 import org.eclipse.microprofile.openapi.annotations.info.Info
 import javax.ws.rs.*
@@ -19,14 +20,26 @@ class API : Application()
 @Path("/greetings")
 @Produces(APPLICATION_JSON)
 interface GreetingsAPI {
+    @Operation(
+        summary = "Add Greeting",
+        description = "Add a Greeting from the representation in the request body, where the given name must be unique."
+    )
     @POST
     @Consumes(APPLICATION_JSON)
     fun add(toAdd: GreetingToAdd): Greeting
 
+    @Operation(
+        summary = "Get Greeting by name",
+        description = "Get the Greeting with the given name, or none."
+    )
     @GET
     @Path("/{name}")
     fun getByName(@PathParam("name") name: String): Greeting?
 
+    @Operation(
+        summary = "Get all Greetings",
+        description = "Get all Greetings."
+    )
     @GET
     fun getAll(): Collection<Greeting>
 }

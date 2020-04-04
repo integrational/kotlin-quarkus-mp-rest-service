@@ -19,6 +19,6 @@ interface GreetingsAPI {
     fun getAll(): Collection<Greeting>
 }
 
-data class GreetingToAdd(val name: String = "") // default value results in default no-arg constructor for JSON-B
+data class GreetingToAdd(val name: String) // no need for default no-arg constructor when using Jackson
 
 data class ErrorResponse(val message: String)

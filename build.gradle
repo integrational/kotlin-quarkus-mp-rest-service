@@ -17,10 +17,14 @@ dependencies {
 
     // included: MicroProfile Config
     implementation 'io.quarkus:quarkus-arc' // CDI
-    implementation 'io.quarkus:quarkus-jsonb' // JSON-B
+    //implementation 'io.quarkus:quarkus-jsonb' // JSON-B: prefer Jackson for its Kotlin support
+    implementation 'io.quarkus:quarkus-jackson' // Jackson databinding instead of JSON-B
     implementation 'io.quarkus:quarkus-jsonp' // JSON-P
     implementation 'io.quarkus:quarkus-resteasy' // JAX-RS
-    implementation 'io.quarkus:quarkus-resteasy-jsonb' // JSON-B for JAX-RS
+    //implementation 'io.quarkus:quarkus-resteasy-jsonb' // JSON-B for JAX-RS: prefer Jackson for its Kotlin support
+    implementation 'io.quarkus:quarkus-resteasy-jackson' // Jackson for JAX-RS instead of JSON-B
+
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin' // Kotlin support for Jackson
 
     implementation 'io.quarkus:quarkus-smallrye-openapi' // MicroProfile OpenAPI
     //implementation 'io.quarkus:quarkus-smallrye-jwt' // MicroProfile JWT Authentication
@@ -31,8 +35,6 @@ dependencies {
     implementation 'io.quarkus:quarkus-smallrye-metrics' // MicroProfile Metrics
     implementation 'io.quarkus:quarkus-smallrye-health' // MicroProfile Health
     implementation 'io.quarkus:quarkus-smallrye-fault-tolerance' // MicroProfile Fault Tolerance
-
-    //implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'

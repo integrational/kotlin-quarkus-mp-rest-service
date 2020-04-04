@@ -1,0 +1,9 @@
+curl -i http://localhost:8080/actuator/info
+curl -i http://localhost:8080/actuator/health
+
+curl -i http://localhost:8080/greetings
+curl -i http://localhost:8080/greetings/
+curl -i http://localhost:8080/greetings/Gerald
+curl -i http://localhost:8080/greetings -H 'Content-Type: application/json' -d '{"name":"Gerald"}'
+curl -i http://localhost:8080/greetings/Gerald
+curl -i http://localhost:8080/greetings

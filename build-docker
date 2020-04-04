@@ -1,0 +1,2 @@
+app=kotlin-quarkus-mp-rest-service
+docker build -t integrational/$app .

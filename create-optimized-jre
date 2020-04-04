@@ -1,0 +1,11 @@
+# discover modules for app
+# fails with: Module org.yaml.snakeyaml not found, required by com.fasterxml.jackson.dataformat.yaml
+#mods=$(jdeps --print-module-deps --multi-release base build/*.jar build/libs/*.jar build/lib/*.jar)
+mods="java.base,java.logging"
+# add undiscovered but required modules (determined by eliminating all NoClassDefFoundError)
+mods="$mods,jdk.unsupported,java.management,jdk.management,java.sql"
+# (re-)create optimized JRE with these modules only
+rm -rf optimized-jre
+jlink --add-modules "$mods" \
+      --no-header-files --no-man-pages --compress=2 --strip-debug \
+      --output optimized-jre

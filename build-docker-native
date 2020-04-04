@@ -1,0 +1,2 @@
+app=kotlin-quarkus-mp-rest-service-native
+docker build -f src/main/docker/Dockerfile.native -t integrational/$app .

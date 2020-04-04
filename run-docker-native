@@ -1,0 +1,2 @@
+app=kotlin-quarkus-mp-rest-service-native
+docker run --rm --name $app -t -p 8080:8080 integrational/$app

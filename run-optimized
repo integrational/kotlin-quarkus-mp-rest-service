@@ -1,0 +1,1 @@
+./optimized-jre/bin/java -jar build/*-runner.jar

@@ -1,9 +1,26 @@
-curl -i http://localhost:8080/actuator/info
-curl -i http://localhost:8080/actuator/health
+#!/bin/bash 
 
-curl -i http://localhost:8080/greetings
-curl -i http://localhost:8080/greetings/
-curl -i http://localhost:8080/greetings/Gerald
-curl -i http://localhost:8080/greetings -H 'Content-Type: application/json' -d '{"name":"Gerald"}'
-curl -i http://localhost:8080/greetings/Gerald
-curl -i http://localhost:8080/greetings
+base="http://localhost:8080"
+
+function get {
+	url="$base$1"
+	echo $'\n'"HTTP GET to $url:"
+	echo '----'
+	curl -i $url
+	echo $'\n----'
+}
+
+function post {
+	url="$base$1"
+	echo $'\n'"HTTP POST of $2 to $url:"
+	echo '----'
+	curl -i $url -d "$2" -H "Content-Type: application/json"
+	echo $'\n----'
+}
+
+get  /greetings
+get  /greetings/
+get  /greetings/Gerald
+post /greetings '{"name":"Gerald"}'
+get  /greetings/Gerald
+get  /greetings

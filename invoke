@@ -4,7 +4,7 @@ base="http://localhost:8080"
 
 function get {
 	url="$base$1"
-	echo $'\n'"HTTP GET to $url:"
+	echo $'\n'"HTTP GET from $url:"
 	echo '----'
 	curl -i $url
 	echo $'\n----'
@@ -24,3 +24,7 @@ get  /greetings/Gerald
 post /greetings '{"name":"Gerald"}'
 get  /greetings/Gerald
 get  /greetings
+
+get /health
+get /metrics
+get /openapi

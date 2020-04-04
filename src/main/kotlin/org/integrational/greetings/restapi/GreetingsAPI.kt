@@ -1,8 +1,20 @@
 package org.integrational.greetings.restapi
 
-import org.integrational.greetings.domain.model.Greeting
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition
+import org.eclipse.microprofile.openapi.annotations.info.Contact
+import org.eclipse.microprofile.openapi.annotations.info.Info
 import javax.ws.rs.*
+import javax.ws.rs.core.Application
 import javax.ws.rs.core.MediaType.APPLICATION_JSON
+
+@OpenAPIDefinition(
+    info = Info(
+        title = "Greetings API",
+        version = "0.0.1",
+        contact = Contact(name = "Gerald Loeffler", url = "http://integrational.eu")
+    )
+)
+class API : Application()
 
 @Path("/greetings")
 @Produces(APPLICATION_JSON)
@@ -19,6 +31,11 @@ interface GreetingsAPI {
     fun getAll(): Collection<Greeting>
 }
 
-data class GreetingToAdd(val name: String) // no need for default no-arg constructor when using Jackson
+sealed class GreetingCore {
+    abstract val name: String
+}
+
+data class GreetingToAdd(override val name: String) : GreetingCore()
+data class Greeting(override val name: String, val message: String) : GreetingCore()
 
 data class ErrorResponse(val message: String)

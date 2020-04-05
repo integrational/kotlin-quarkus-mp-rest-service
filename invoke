@@ -18,13 +18,16 @@ function post {
 	echo $'\n----'
 }
 
+get /openapi
+
+get /health
+get /metrics
+
 get  /greetings
 get  /greetings/
 get  /greetings/Gerald
 post /greetings '{"name":"Gerald"}'
 get  /greetings/Gerald
+post /greetings '{"name":"gerald"}'
+get  /greetings/gerald
 get  /greetings
-
-get /health
-get /metrics
-get /openapi

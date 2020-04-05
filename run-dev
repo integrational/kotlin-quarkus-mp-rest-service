@@ -1,1 +1,1 @@
-./gradlew quarkusDev
+./gradlew clean test quarkusDev

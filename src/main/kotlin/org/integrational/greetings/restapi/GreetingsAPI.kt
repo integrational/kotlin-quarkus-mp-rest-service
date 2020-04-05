@@ -11,11 +11,9 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses
 import java.net.URI
 import javax.ws.rs.*
-import javax.ws.rs.core.Application
-import javax.ws.rs.core.Context
+import javax.ws.rs.core.*
 import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.UriInfo
+import kotlin.reflect.jvm.javaMethod
 
 @OpenAPIDefinition(
     info = Info(
@@ -62,6 +60,13 @@ interface GreetingsAPI {
     @Path("/{name}")
     fun getByName(@PathParam("name") name: String): Greeting?
 
+    /**
+     * Return the URI of the Greeting with the given name, assuming such a Greeting exists.
+     * This is the URI [getByName] is mapped to.
+     */
+    fun uriForName(name: String): URI =
+        UriBuilder.fromResource(GreetingsAPI::class.java).path(::getByName.javaMethod).build(name)
+
     @Operation(
         summary = "Get all Greetings",
         description = "Get all Greetings, in no particular order"
@@ -88,6 +93,7 @@ data class Greeting(
     val message: String
 ) : GreetingCore()
 
+@Schema(description = "Response when an error has occurred")
 data class ErrorResponse(
     @get:Schema(description = "Explanation of the error", example = "Duplicate name 'Isaac Newton'")
     val message: String

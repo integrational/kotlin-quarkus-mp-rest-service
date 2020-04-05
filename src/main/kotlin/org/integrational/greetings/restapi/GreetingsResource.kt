@@ -12,14 +12,14 @@ import org.integrational.greetings.domain.model.Greeting as DomainGreeting
 
 @ApplicationScoped
 class GreetingsResource @Inject constructor(private val svc: GreetingsService) : GreetingsAPI {
-    override fun add(toAdd: GreetingToAdd, uriInfo: UriInfo) =
-        svc.add(toAdd.name).let { Response.created(uriOfAdded(it, uriInfo)).build() }
+    override fun add(toAdd: GreetingToAdd, uriInfo: UriInfo) = svc.add(toAdd.name)
+        .let { uriForName(it.name) }
+        .let { Response.created(it).build() }
 
     override fun getByName(name: String) = svc.get(name)?.let { fromDomain(it) }
     override fun getAll() = svc.getAll().map { fromDomain(it) }
 
     companion object {
-        private fun uriOfAdded(dg: DomainGreeting, ui: UriInfo) = ui.absolutePathBuilder.path(dg.name).build()
         private fun fromDomain(dg: DomainGreeting) = Greeting(dg.name, dg.message)
     }
 }

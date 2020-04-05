@@ -30,21 +30,18 @@ class API : Application()
 interface GreetingsAPI {
     @Operation(
         summary = "Add a Greeting",
-        description = "Add a Greeting from the representation in the request body, where the given name must be unique, returning the complete added Greeting"
+        description = "Add a Greeting from the representation in the request body, where the given name must be unique"
     )
     @APIResponses(
         APIResponse(
-            responseCode = "201",
-            description = "Greeting was added",
+            responseCode = "201", description = "Greeting was added",
             headers = [Header(
-                name = "Location",
-                description = "Absolute URI of the added Greeting",
+                name = "Location", description = "Absolute URI of the added Greeting",
                 schema = Schema(implementation = URI::class)
             )]
         ),
         APIResponse(
-            responseCode = "409",
-            description = "Greeting was not added because of duplicate name",
+            responseCode = "409", description = "Greeting was not added because name was not unique",
             content = [Content(schema = Schema(implementation = ErrorResponse::class))]
         )
     )
@@ -55,6 +52,13 @@ interface GreetingsAPI {
     @Operation(
         summary = "Get a Greeting by name",
         description = "Get the Greeting with the given name, if any, where the name is case-insensitive"
+    )
+    @APIResponses(
+        APIResponse(
+            responseCode = "200", description = "OK",
+            content = [Content(schema = Schema(implementation = Greeting::class))]
+        ),
+        APIResponse(responseCode = "204", description = "There is no Greeting with the given name")
     )
     @GET
     @Path("/{name}")
@@ -67,10 +71,7 @@ interface GreetingsAPI {
     fun uriForName(name: String): URI =
         UriBuilder.fromResource(GreetingsAPI::class.java).path(::getByName.javaMethod).build(name)
 
-    @Operation(
-        summary = "Get all Greetings",
-        description = "Get all Greetings, in no particular order"
-    )
+    @Operation(summary = "Get all Greetings", description = "Get all Greetings, in no particular order")
     @GET
     fun getAll(): Collection<Greeting>
 }

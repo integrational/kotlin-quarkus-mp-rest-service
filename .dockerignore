@@ -1,4 +1,6 @@
 .git
 .gradle
+.mvn
 build
+target
 optimized-jre

@@ -25,6 +25,9 @@ import kotlin.reflect.jvm.javaMethod
 )
 class API : Application()
 
+/**
+ * Exposed (inbound) REST API of this app.
+ */
 @Path("/greetings")
 @Produces(APPLICATION_JSON)
 interface GreetingsAPI {

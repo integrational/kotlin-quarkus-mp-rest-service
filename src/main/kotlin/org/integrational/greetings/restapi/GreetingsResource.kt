@@ -10,6 +10,9 @@ import javax.ws.rs.ext.ExceptionMapper
 import javax.ws.rs.ext.Provider
 import org.integrational.greetings.domain.model.Greeting as DomainGreeting
 
+/**
+ * Exposed (inbound) REST API implementation ("driving adapter") of this app.
+ */
 @ApplicationScoped
 class GreetingsResource @Inject constructor(private val svc: GreetingsService) : GreetingsAPI {
     override fun add(toAdd: GreetingToAdd, uriInfo: UriInfo) = svc.add(toAdd.name)

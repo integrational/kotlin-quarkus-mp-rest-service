@@ -6,6 +6,9 @@ import org.integrational.greetings.domain.repo.GreetingsRepo
 import java.util.concurrent.atomic.AtomicLong
 import javax.enterprise.context.ApplicationScoped
 
+/**
+ * [GreetingsRepo] repository implementation ("driven adapter") that persists [Greeting]s in memory.
+ */
 @ApplicationScoped
 class InMemoryGreetingsRepo : GreetingsRepo {
     companion object {

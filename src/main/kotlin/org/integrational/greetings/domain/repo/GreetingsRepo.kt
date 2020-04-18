@@ -2,6 +2,9 @@ package org.integrational.greetings.domain.repo
 
 import org.integrational.greetings.domain.model.Greeting
 
+/**
+ * Interface to a repository ("driven port") for persisting [Greeting]s.
+ */
 interface GreetingsRepo {
     /**
      * Create a new persistent [Greeting] with a newly assigned [Greeting.id].

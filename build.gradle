@@ -12,7 +12,9 @@ repositories {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+
     implementation 'io.quarkus:quarkus-kotlin'
 
     // included: MicroProfile Config
@@ -23,9 +25,6 @@ dependencies {
     implementation 'io.quarkus:quarkus-resteasy' // JAX-RS
     //implementation 'io.quarkus:quarkus-resteasy-jsonb' // JSON-B for JAX-RS: prefer Jackson for its Kotlin support
     implementation 'io.quarkus:quarkus-resteasy-jackson' // Jackson for JAX-RS instead of JSON-B
-
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin' // Kotlin support for Jackson
-
     implementation 'io.quarkus:quarkus-smallrye-openapi' // MicroProfile OpenAPI
     //implementation 'io.quarkus:quarkus-smallrye-jwt' // MicroProfile JWT Authentication
 
@@ -36,6 +35,10 @@ dependencies {
     implementation 'io.quarkus:quarkus-smallrye-health' // MicroProfile Health
     implementation 'io.quarkus:quarkus-smallrye-fault-tolerance' // MicroProfile Fault Tolerance
 
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin' // Kotlin support for Jackson
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
 }
@@ -55,6 +58,7 @@ allOpen {
     annotation("javax.ws.rs.Path")
     annotation("javax.enterprise.context.ApplicationScoped")
     annotation("io.quarkus.test.junit.QuarkusTest")
+    annotation("io.quarkus.test.junit.NativeImageTest")
 }
 
 java {
@@ -65,8 +69,25 @@ java {
 compileKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
     kotlinOptions.javaParameters = true
+    kotlinOptions.freeCompilerArgs = ['-Xjsr305=strict', '-Xjvm-default=enable'] // strict mode for JSR-305 annotations, enable @JvmDefault
 }
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+    kotlinOptions.javaParameters = true
+    kotlinOptions.freeCompilerArgs = ['-Xjsr305=strict', '-Xjvm-default=enable'] // strict mode for JSR-305 annotations, enable @JvmDefault
+}
+
+test {
+    dependsOn 'cleanTest'
+    dependsOn 'quarkusTestConfig'
+    useJUnitPlatform()
+    forkEvery 1
+
+//    filter {
+//        includeTestsMatching "org.integrational.greetings.*"
+//        includeTestsMatching "org.integrational.greetings.restapi.*"
+//
+//        includeTestsMatching "*Test"
+//    }
 }
